@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Александр Бусловский — Портфолио</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    .title {
+      position: fixed;
+      top: 20px;
+      z-index: 1000;
+      background: #000;
+      padding: 20px 40px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: white;
+      border-radius: 16px;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .resume-container {
+      position: fixed;
+      top: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 8px;
+    }
+
+    .resume-link, .telegram-link {
+      font-size: 2rem;
+      font-weight: bold;
+      padding: 20px 40px;
+      text-decoration: none;
+      border-radius: 16px;
+      white-space: nowrap;
+    }
+
+    .resume-link {
+      background: #000;
+      color: white;
+    }
+
+    .telegram-link {
+      background: #0088cc;
+      color: white;
+      transition: background 0.3s ease;
+    }
+
+    .telegram-link:hover {
+      background: #006fa8;
+    }
+
+    .scroll-container {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .scene {
+      display: flex;
+      align-items: center;
+      height: 100vh;
+      padding-left: 0;
+      padding-right: 100px;
+      gap: 60px;
+      will-change: transform;
+    }
+
+    .card {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .card img,
+    .card video {
+      width: auto;
+      height: auto;
+      max-height: 90vh;
+      display: block;
+      pointer-events: none;
+      background-color: #111;
+      border-radius: 12px;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      text-align: center;
+      pointer-events: none;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .overlay h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .overlay p {
+      font-size: 1.2rem;
+      color: #ccc;
+      padding: 0 20px;
+    }
+
+    .overlay em {
+      font-size: 1rem;
+      color: #aaa;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    .card:hover .overlay {
+      opacity: 1;
+    }
+
+    .copied-popup {
+      position: fixed;
+      background: #00cc66;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      padding: 12px 24px;
+      border-radius: 12px;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .copied-popup.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      html, body {
+        overflow-y: auto;
+      }
+
+      .scroll-container {
+        overflow: visible;
+        height: auto;
+      }
+
+      .scene {
+        flex-direction: column;
+        align-items: center;
+        padding: 160px 20px 80px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 600px;
+        flex-direction: column;
+        margin-bottom: 30px;
+      }
+
+      .card img,
+      .card video {
+        width: 100%;
+        max-height: none;
+      }
+
+      .overlay {
+        position: static;
+        opacity: 1;
+        background: transparent;
+        pointer-events: auto;
+        padding: 20px 10px;
+      }
+
+      .card:hover .overlay {
+        opacity: 1;
+      }
+
+      .title {
+        position: static;
+        font-size: 1.5rem;
+        padding: 10px 20px;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .resume-container {
+        position: static;
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 10px;
+      }
+
+      .resume-link, .telegram-link {
+        font-size: 1.3rem;
+        padding: 12px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="title" id="titleBlock">Александр Бусловский — человек-оркестр</div>
+  <div class="resume-container" id="resumeContainer">
+    <a href="resume.pdf" download class="resume-link">Резюме</a>
+    <a href="https://t.me/Cbinohac" target="_blank" class="telegram-link" id="telegramLink">Telegram</a>
+  </div>
+
+  <div class="copied-popup" id="copiedPopup">СКОПИРОВАНО</div>
+
+  <div class="scroll-container" id="scrollContainer">
+    <div class="scene" id="scene">
+      <!-- КИСТЬЮ -->
+      <div class="card" onclick="copyLink(event, 'https://www.fl.ru/user/graphiclogo/portfolio/6075599/')">
+        <img src="img/drawing.jpg" alt="Кистью" />
+        <div class="overlay">
+          <h2>Кистью</h2>
+          <p>Уверенно работаю в Photoshop, владею техникой matte painting — создаю цельные визуальные образы, соединяя разные элементы. Занимаюсь ретушью и художественным редактированием, разрабатывал обложки для музыкальных релизов и оформлял карточки для маркетплейсов.</p>
+          <em>кликните чтобы скопировать ссылку</em>
+        </div>
+      </div>
+
+      <!-- ЗВУКОМ -->
+      <div class="card" onmouseenter="playVideo(this)" onmouseout="pauseVideo(this)">
+        <video class="media" muted playsinline preload="none" poster="img/video-poster.jpg">
+          <source src="video/music-video.mp4" type="video/mp4" />
+        </video>
+        <div class="overlay">
+          <h2>Звуком</h2>
+          <p>Я занимаюсь саунд-дизайном и пою. Мои песни — это отражение чувств и историй, которые я передаю через музыку и стихи.</p>
+        </div>
+      </div>
+
+      <!-- ТЕКСТОМ -->
+      <div class="card" onclick="copyLink(event, 'https://t.me/copyriteam')">
+        <img src="img/writing.jpg" alt="Текстом" />
+        <div class="overlay">
+          <h2>Текстом</h2>
+          <p>Создаю креативные тексты под задачу: от идеи до финальной запятой. Пишу посты, описания, сторис, смыслы.</p>
+          <em>кликните чтобы скопировать ссылку на статью</em>
+        </div>
+      </div>
+
+      <!-- ОБЪЕМОМ -->
+      <div class="card">
+        <img src="img/3d.jpg" alt="Объемом" />
+        <div class="overlay">
+          <h2>Объемом</h2>
+          <p>Я немного работаю в области 3D-моделирования. В Cinema 4D занимаюсь созданием сцен и анимаций, а в ZBrush — моделирую отдельные объекты.</p>
+        </div>
+      </div>
+
+      <!-- ВИДЕО -->
+      <div class="card" onmouseenter="playVideo(this)" onmouseout="pauseVideo(this)">
+        <video class="media" muted playsinline preload="none" poster="img/video-preview.jpg">
+          <source src="video/portfolio-video.mp4" type="video/mp4" />
+        </video>
+        <div class="overlay">
+          <h2>Видео</h2>
+          <p>Занимаюсь видеомонтажом — от нарезок до полноценных роликов.</p>
+        </div>
+      </div>
+
+      <!-- ФОТОКАМЕРОЙ -->
+      <div class="card" data-card="photo" onclick="copyLink(event, 'https://disk.yandex.ru/d/AsclMIZKw94q5g')">
+        <img src="img/photo.jpg" alt="Фотокамерой" />
+        <div class="overlay">
+          <h2>Фотокамерой</h2>
+          <p>Я занимаюсь предметной фотографией, создавая детализированные и выразительные кадры. Камера для меня — это поиск красоты в деталях и точность в каждом снимке.</p>
+          <em>кликните чтобы скопировать ссылку</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const container = document.getElementById("scrollContainer");
+    const title = document.getElementById("titleBlock");
+    const resumeContainer = document.getElementById("resumeContainer");
+    const telegramLink = document.getElementById("telegramLink");
+    const popup = document.getElementById("copiedPopup");
+
+    let mouseX = 0;
+    let currentX = 0;
+    let maxScroll = 0;
+
+    function animate() {
+      const delta = (mouseX - currentX) * 0.05;
+      currentX += delta;
+      currentX = Math.max(0, Math.min(currentX, maxScroll));
+      container.scrollLeft = currentX;
+      requestAnimationFrame(animate);
+    }
+
+    container.addEventListener("wheel", (evt) => {
+      evt.preventDefault();
+      container.scrollLeft += evt.deltaY;
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (window.innerWidth <= 768) return;
+      const x = e.clientX;
+      const width = window.innerWidth;
+      const isLeft = x < width / 2;
+
+      title.style.left = isLeft ? "auto" : "20px";
+      title.style.right = isLeft ? "20px" : "auto";
+
+      resumeContainer.style.left = isLeft ? "20px" : "auto";
+      resumeContainer.style.right = isLeft ? "auto" : "20px";
+
+      const percentage = x / width;
+      maxScroll = container.scrollWidth - container.clientWidth;
+      mouseX = maxScroll * percentage;
+    });
+
+    telegramLink.addEventListener("mouseenter", () => {
+      telegramLink.textContent = "@Cbinohac";
+    });
+
+    telegramLink.addEventListener("mouseleave", () => {
+      telegramLink.textContent = "Telegram";
+    });
+
+    function playVideo(el) {
+      const video = el.querySelector("video");
+      if (video) {
+        video.muted = false;
+        video.currentTime = 0;
+        video.play();
+      }
+    }
+
+    function pauseVideo(el) {
+      const video = el.querySelector("video");
+      if (video) {
+        video.pause();
+        video.muted = true;
+      }
+    }
+
+    function copyLink(e, link) {
+      const x = e.clientX;
+      const y = e.clientY;
+      const card = e.currentTarget;
+      const isPhotoCard = card.dataset.card === "photo";
+
+      popup.style.opacity = 0;
+      popup.style.display = "block";
+      const popupWidth = popup.offsetWidth;
+
+      const popupX = isPhotoCard ? x - popupWidth - 20 : x + 20;
+
+      popup.textContent = "СКОПИРОВАНО";
+      popup.style.left = `${popupX}px`;
+      popup.style.top = `${y + 20}px`;
+      popup.style.opacity = 1;
+      popup.classList.add("show");
+
+      setTimeout(() => {
+        popup.classList.remove("show");
+        popup.style.display = "none";
+      }, 500);
+
+      navigator.clipboard.writeText(link);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
